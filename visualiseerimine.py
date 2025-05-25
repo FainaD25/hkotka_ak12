@@ -127,15 +127,21 @@ if profiles is not None:
 else:
     st.error("Ei õnnestunud 100 päeva profiile laadida.")
 
-# Violin plot ühise päeva kohta
-st.subheader("Violin plot – ühise päeva tunnijaotused")
-violin_df, c_day = prepare_violin_data()
-if violin_df is not None:
+# Stripplot ühise päeva kohta (kui iga punkt on unikaalne)
+st.subheader("Stripplot – ühise päeva tarbimispunktid")
+strip_df, c_day = prepare_violin_data()
+if strip_df is not None:
     fig2, ax2 = plt.subplots(figsize=(14, 6))
-    sns.violinplot(data=violin_df, x="Tund", y="kWh", hue="Mõõtepunkt", split=False, inner="quartile", palette="tab10", ax=ax2)
-    ax2.set_title(f"Tarbimise jaotused kuupäeval {c_day}")
+    sns.stripplot(
+        data=strip_df,
+        x="Tund", y="kWh", hue="Mõõtepunkt",
+        dodge=True, jitter=True,
+        palette="tab10", ax=ax2, size=4
+    )
+    ax2.set_title(f"Tarbimispunktid kuupäeval {c_day}")
     ax2.set_xlabel("Tund")
     ax2.set_ylabel("kWh")
+    ax2.legend(title="Mõõtepunkt", bbox_to_anchor=(1.05, 1), loc='upper left')
     st.pyplot(fig2)
 else:
-    st.error("Ei õnnestunud violin plot’i andmeid luua.")
+    st.error("Ei õnnestunud stripplot’i andmeid luua.")
