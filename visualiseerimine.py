@@ -110,7 +110,7 @@ def prepare_violin_data():
     return pd.DataFrame(rows), common_day
 
 # Streamlit UI
-st.title("Elektritarbimise alternatiivsed visualiseeringud")
+st.title("Elektritarbimise visualiseeringud")
 
 # Joonis 100 päeva päevaprofiilidest
 st.subheader("100 järjestikuse päeva päevaprofiilid")
